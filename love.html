@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给我最爱的你</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffd6e7 25%, #ffc4dd 50%, #ffb3d1 75%, #ff9ec5 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .heart-main {
+            font-size: 120px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 107, 157, 0.6));
+            margin-bottom: 30px;
+            user-select: none;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.15); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.15); }
+            70% { transform: scale(1); }
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            letter-spacing: 8px;
+            font-weight: 700;
+        }
+
+        .message {
+            color: #c2185b;
+            font-size: 1.3rem;
+            line-height: 2.2;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 8px 32px rgba(255, 107, 157, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+        }
+
+        .message p {
+            margin-bottom: 15px;
+        }
+
+        .signature {
+            color: #ad1457;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 133, 162, 0.6);
+            font-size: 24px;
+            pointer-events: none;
+            animation: float linear infinite;
+            user-select: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 2s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .click-heart {
+            position: absolute;
+            color: #ff6b9d;
+            font-size: 30px;
+            pointer-events: none;
+            animation: floatUp 1.5s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-150px) scale(1.5);
+            }
+        }
+
+        .border-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .corner-heart {
+            position: absolute;
+            font-size: 50px;
+            opacity: 0.3;
+            animation: gentlePulse 3s ease-in-out infinite;
+        }
+
+        .corner-heart:nth-child(1) { top: 20px; left: 20px; animation-delay: 0s; }
+        .corner-heart:nth-child(2) { top: 20px; right: 20px; animation-delay: 0.5s; }
+        .corner-heart:nth-child(3) { bottom: 20px; left: 20px; animation-delay: 1s; }
+        .corner-heart:nth-child(4) { bottom: 20px; right: 20px; animation-delay: 1.5s; }
+
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+        }
+
+        .love-quote {
+            margin-top: 20px;
+            padding: 20px;
+            color: #880e4f;
+            font-size: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; letter-spacing: 4px; }
+            .message { font-size: 1.1rem; padding: 25px; }
+            .heart-main { font-size: 80px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="border-hearts">
+        <div class="corner-heart">💕</div>
+        <div class="corner-heart">💕</div>
+        <div class="corner-heart">💕</div>
+        <div class="corner-heart">💕</div>
+    </div>
+
+    <div class="container">
+        <div class="heart-main">💖</div>
+        <h1>致我最爱的你</h1>
+        <div class="message">
+            <p>遇见你，是我这辈子最美的意外。</p>
+            <p>你的笑容，是我每天最期待的风景；</p>
+            <p>你的温柔，是我心底最柔软的角落。</p>
+            <p>我想陪你走过四季，看遍世间繁华，</p>
+            <p>在平凡的每一天里，给你不平凡的爱。</p>
+            <p>你是我心中的光，是我永远的归宿。</p>
+            <div class="love-quote">
+                "山河远阔，人间烟火，无一是你，无一不是你。"
+            </div>
+            <div class="signature">
+                —— 爱你的我，永远 💌
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 生成飘落的爱心
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            const hearts = ['💗', '💖', '💝', '💕', '💓', '💘', '💞'];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 30 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 10000);
+        }
+
+        // 生成闪烁的星星
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            sparkle.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => sparkle.remove(), 4000);
+        }
+
+        // 点击生成爱心
+        document.addEventListener('click', function(e) {
+            const heart = document.createElement('div');
+            heart.className = 'click-heart';
+            heart.innerHTML = '💗';
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 1500);
+        });
+
+        // 定时生成
+        setInterval(createFloatingHeart, 400);
+        setInterval(createSparkle, 300);
+
+        // 初始生成一些
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createFloatingHeart, i * 200);
+        }
+    </script>
+</body>
+</html>

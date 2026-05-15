@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我们的结婚照 | 一生一世一双人</title>
+
+    <!-- Open Graph / 社交平台卡片标签 -->
+    <meta property="og:title" content="我们的结婚照 | 一生一世一双人">
+    <meta property="og:description" content="执子之手，与子偕老。这一纸红底，定格了你我最郑重的模样。">
+    <!-- 上线后把下面这行换成你的线上图片地址，尺寸建议 300x300 以上 -->
+    <meta property="og:image" content="https://你的域名/结婚照.jpg">
+    <meta property="og:type" content="website">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ruby: #8B1E3F;
+            --crimson: #C73E56;
+            --rose: #E8A0BF;
+            --blush: #FBEEF5;
+            --gold: #D4AF37;
+            --ivory: #FFFCF7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: var(--blush);
+            color: var(--ruby);
+            overflow-x: hidden;
+        }
+
+        /* ===== 粒子背景 ===== */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: drift linear infinite;
+        }
+
+        @keyframes drift {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            15% { opacity: 0.5; }
+            85% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) translateX(40px) scale(1); opacity: 0; }
+        }
+
+        /* ===== 首屏大图 ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(199, 62, 86, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(232, 160, 191, 0.12) 0%, transparent 50%),
+                linear-gradient(180deg, var(--blush) 0%, var(--ivory) 100%);
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c73e56' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .overline {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.6rem;
+            color: var(--crimson);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.2s ease forwards 0.3s;
+            letter-spacing: 6px;
+            margin-bottom: 10px;
+        }
+
+        .main-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--ruby);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.2s ease forwards 0.6s;
+            margin-bottom: 40px;
+            letter-spacing: 8px;
+            text-shadow: 0 2px 20px rgba(139, 30, 63, 0.1);
+        }
+
+        /* ===== 照片画框 ===== */
+        .photo-frame {
+            position: relative;
+            opacity: 0;
+            transform: scale(0.9) translateY(40px);
+            animation: frameIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.9s;
+        }
+
+        @keyframes frameIn {
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .frame-outer {
+            background: linear-gradient(135deg, var(--ivory) 0%, #fff 50%, var(--ivory) 100%);
+            padding: 16px;
+            border-radius: 4px;
+            box-shadow:
+                0 20px 60px rgba(139, 30, 63, 0.15),
+                0 8px 24px rgba(139, 30, 63, 0.08),
+                inset 0 0 0 1px rgba(212, 175, 55, 0.2);
+            position: relative;
+        }
+
+        .frame-outer::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .frame-corner {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gold);
+            z-index: 3;
+            pointer-events: none;
+        }
+        .frame-corner.tl { top: 4px; left: 4px; border-right: none; border-bottom: none; }
+        .frame-corner.tr { top: 4px; right: 4px; border-left: none; border-bottom: none; }
+        .frame-corner.bl { bottom: 4px; left: 4px; border-right: none; border-top: none; }
+        .frame-corner.br { bottom: 4px; right: 4px; border-left: none; border-top: none; }
+
+        .photo-img {
+            display: block;
+            width: 100%;
+            max-width: 520px;
+            height: auto;
+            border-radius: 2px;
+            filter: contrast(1.03) saturate(1.05);
+            transition: filter 0.6s ease;
+        }
+
+        .photo-frame:hover .photo-img {
+            filter: contrast(1.05) saturate(1.1) brightness(1.02);
+        }
+
+        .frame-caption {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.85rem;
+            color: var(--crimson);
+            letter-spacing: 3px;
+            opacity: 0.7;
+        }
+
+        /* ===== 向下滚动提示 ===== */
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 2.5s;
+            cursor: pointer;
+            color: var(--crimson);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .scroll-arrow {
+            width: 24px;
+            height: 24px;
+            border-right: 2px solid var(--crimson);
+            border-bottom: 2px solid var(--crimson);
+            transform: rotate(45deg);
+            animation: bounce 2s infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: rotate(45deg) translateY(0); }
+            50% { transform: rotate(45deg) translateY(8px); }
+        }
+
+        /* ===== 誓言区域 ===== */
+        .vows {
+            position: relative;
+            padding: 100px 20px;
+            background: linear-gradient(180deg, var(--ivory) 0%, var(--blush) 100%);
+            z-index: 1;
+        }
+
+        .vows-inner {
+            max-width: 680px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .vows-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+
+        .vows-divider .line {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--rose), transparent);
+        }
+
+        .vows-divider .icon {
+            font-size: 1.5rem;
+            color: var(--crimson);
+            opacity: 0.6;
+        }
+
+        .vows-text {
+            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+            line-height: 2.4;
+            color: var(--ruby);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .vows-text p {
+            margin-bottom: 1.5em;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .vows-text p.visible {
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        /* ===== 时间线 ===== */
+        .timeline {
+            position: relative;
+            padding: 100px 20px;
+            background: var(--blush);
+            z-index: 1;
+        }
+
+        .timeline-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            color: var(--ruby);
+            margin-bottom: 60px;
+            letter-spacing: 6px;
+        }
+
+        .timeline-track {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline-track::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--rose), var(--crimson), var(--rose));
+            opacity: 0.3;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 0 0 40px 30px;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .timeline-item.visible {
+            animation: slideInLeft 0.8s ease forwards;
+        }
+
+        @keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -34px;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            background: var(--crimson);
+            border-radius: 50%;
+            border: 3px solid var(--blush);
+            box-shadow: 0 0 0 2px var(--crimson);
+        }
+
+        .timeline-date {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.3rem;
+            color: var(--crimson);
+            margin-bottom: 6px;
+        }
+
+        .timeline-desc {
+            font-size: 1rem;
+            color: var(--ruby);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* ===== 尾屏 ===== */
+        .footer-love {
+            position: relative;
+            padding: 120px 20px;
+            background: linear-gradient(180deg, var(--blush) 0%, var(--ruby) 100%);
+            text-align: center;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .footer-love::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 85 C20 60 5 45 5 30 C5 15 20 5 35 5 C42 5 47 10 50 15 C53 10 58 5 65 5 C80 5 95 15 95 30 C95 45 80 60 50 85Z' fill='%23ffffff' fill-opacity='0.03'/%3E%3C/svg%3E") center/80px;
+            opacity: 0.5;
+        }
+
+        .footer-heart {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            animation: heartbeat 2s ease-in-out infinite;
+            display: inline-block;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.12); }
+        }
+
+        .footer-text {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            color: var(--ivory);
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-sub {
+            font-size: 1rem;
+            color: rgba(255, 252, 247, 0.7);
+            letter-spacing: 4px;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== 通用动画 ===== */
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== 飘落爱心 ===== */
+        .falling-hearts {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .fheart {
+            position: absolute;
+            top: -40px;
+            color: var(--crimson);
+            opacity: 0.3;
+            animation: fall linear infinite;
+            font-size: 18px;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* ===== 分享引导浮层 ===== */
+        .share-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 200;
+            background: linear-gradient(135deg, var(--crimson), var(--ruby));
+            color: #fff;
+            padding: 14px 22px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            box-shadow: 0 6px 24px rgba(139, 30, 63, 0.35);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards 3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .share-float:hover {
+            transform: translateY(-2px);
+        }
+
+        .share-float .arrow-up {
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 8px solid #fff;
+            margin-right: 4px;
+            animation: bounceArrow 1.5s infinite;
+        }
+
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 600px) {
+            .hero { padding: 40px 16px; }
+            .frame-outer { padding: 10px; }
+            .timeline-track { padding-left: 30px; }
+            .vows { padding: 60px 16px; }
+            .timeline { padding: 60px 16px; }
+            .footer-love { padding: 80px 16px; }
+            .share-float { padding: 12px 18px; font-size: 0.85rem; bottom: 16px; right: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 粒子背景 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- 飘落爱心 -->
+    <div class="falling-hearts" id="fallingHearts"></div>
+
+    <!-- 首屏 -->
+    <section class="hero">
+        <div class="overline">执子之手</div>
+        <h1 class="main-title">一生一世一双人</h1>
+
+        <div class="photo-frame">
+            <div class="frame-outer">
+                <div class="frame-corner tl"></div>
+                <div class="frame-corner tr"></div>
+                <div class="frame-corner bl"></div>
+                <div class="frame-corner br"></div>
+                <img src="结婚照.jpg" alt="我们的结婚照" class="photo-img">
+            </div>
+            <div class="frame-caption">红底为证 · 白衫为盟 · 此心不移</div>
+        </div>
+
+        <div class="scroll-hint" onclick="document.querySelector('.vows').scrollIntoView({behavior:'smooth'})">
+            <span>往下翻</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- 誓言 -->
+    <section class="vows">
+        <div class="vows-inner">
+            <div class="vows-divider">
+                <div class="line"></div>
+                <div class="icon">❦</div>
+                <div class="line"></div>
+            </div>
+            <div class="vows-text">
+                <p>这一纸红底，定格了你我最郑重的模样。</p>
+                <p>白衬衫如雪，映着你嘴角的笑意；<br>小红心似焰，藏着我胸口的滚烫。</p>
+                <p>我曾以为浪漫是诗和远方，<br>后来才懂，浪漫是清晨你递来的一杯温水，<br>是夜晚留给我的一盏灯火，<br>是户口本上并排的两个名字。</p>
+                <p>从此，一屋两人，三餐四季。<br>风雨是你，晴空是你，<br>眼底星河是你，心底温柔亦是你。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 时间线 -->
+    <section class="timeline">
+        <h2 class="timeline-title">我们的故事</h2>
+        <div class="timeline-track">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">相遇</div>
+                <div class="timeline-desc">茫茫人海中，你朝我走来。<br>从此我的目光有了落脚的地方。</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">相恋</div>
+                <div class="timeline-desc">牵手走过的每条街都成了纪念，<br>分享过的每句话都成了诗篇。</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">相守</div>
+                <div class="timeline-desc">红底白衫，盖章为证。<br>不是爱情的终点，而是一生的起点。</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">余生</div>
+                <div class="timeline-desc">愿以岁月为笔，以深情为墨，<br>写尽一生的温柔与陪伴。</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 尾屏 -->
+    <section class="footer-love">
+        <div class="footer-heart">💖</div>
+        <div class="footer-text">余生请多指教</div>
+        <div class="footer-sub">LOVE YOU FOREVER</div>
+    </section>
+
+    <script>
+        // 生成粒子
+        const particleContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 6 + 2;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.background = ['#C73E56', '#E8A0BF', '#D4AF37'][Math.floor(Math.random() * 3)];
+            p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+            p.style.animationDelay = (Math.random() * 10) + 's';
+            particleContainer.appendChild(p);
+        }
+
+        // 生成飘落爱心
+        const heartContainer = document.getElementById('fallingHearts');
+        const heartChars = ['💗', '💖', '💝', '💕', '💓'];
+        function createFallingHeart() {
+            const h = document.createElement('div');
+            h.className = 'fheart';
+            h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = (Math.random() * 16 + 12) + 'px';
+            h.style.animationDuration = (Math.random() * 6 + 6) + 's';
+            heartContainer.appendChild(h);
+            setTimeout(() => h.remove(), 12000);
+        }
+        setInterval(createFallingHeart, 800);
+        for (let i = 0; i < 8; i++) setTimeout(createFallingHeart, i * 400);
+
+        // 滚动淡入
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.vows-text p, .timeline-item').forEach(el => observer.observe(el));
+    </script>
+
+    <!-- 分享引导浮层 -->
+    <div class="share-float" id="shareBtn" onclick="showShareTip()">
+        <div class="arrow-up"></div>
+        <span>分享给TA</span>
+    </div>
+
+    <script>
+        function showShareTip() {
+            // 微信内置浏览器提示右上角菜单
+            if (/MicroMessenger/i.test(navigator.userAgent)) {
+                alert('点击右上角「···」\n选择「发送给朋友」或「分享到朋友圈」');
+            } else {
+                alert('请复制链接，在微信中打开后分享');
+            }
+        }
+
+        /* ============================================================
+           微信 JS-SDK 分享配置（需要上线后才能生效）
+           ============================================================
+           使用方法：
+           1. 把页面部署到一个有域名的服务器（如 https://yourdomain.com/our-wedding.html）
+           2. 注册微信公众号/开放平台，获取 AppID
+           3. 在公众号后台设置「JS接口安全域名」为你的域名
+           4. 准备一个后端接口，返回如下 JSON 数据供前端调用 wx.config：
+              {
+                "appId": "wx你的AppID",
+                "timestamp": 1234567890,
+                "nonceStr": "随机字符串",
+                "signature": "由后端根据当前URL生成的签名"
+              }
+           5. 把下面代码里的占位符替换为真实值
+        ============================================================ */
+
+        /*
+        // 第1步：引入微信 JS-SDK
+        const wxScript = document.createElement('script');
+        wxScript.src = 'https://res.wx.qq.com/open/js/jweixin-1.6.0.js';
+        wxScript.onload = function() {
+            // 第2步：从后端获取签名配置
+            fetch('/api/wx-signature?url=' + encodeURIComponent(location.href.split('#')[0]))
+                .then(r => r.json())
+                .then(config => {
+                    // 第3步：配置 wx.config
+                    wx.config({
+                        debug: false,
+                        appId: config.appId,
+                        timestamp: config.timestamp,
+                        nonceStr: config.nonceStr,
+                        signature: config.signature,
+                        jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData', 'onMenuShareAppMessage', 'onMenuShareTimeline']
+                    });
+
+                    wx.ready(function() {
+                        const shareData = {
+                            title: '我们的结婚照 | 一生一世一双人',
+                            desc: '执子之手，与子偕老。这一纸红底，定格了你我最郑重的模样。',
+                            link: location.href,
+                            // 必须是用线上绝对路径的图片，尺寸建议 300x300 以上
+                            imgUrl: 'https://你的域名/结婚照.jpg',
+                            success: function() {
+                                console.log('分享成功');
+                            }
+                        };
+
+                        // 分享给朋友
+                        wx.updateAppMessageShareData(shareData);
+                        wx.onMenuShareAppMessage(shareData);
+
+                        // 分享到朋友圈
+                        wx.updateTimelineShareData({
+                            title: shareData.title,
+                            link: shareData.link,
+                            imgUrl: shareData.imgUrl,
+                            success: shareData.success
+                        });
+                        wx.onMenuShareTimeline({
+                            title: shareData.title,
+                            link: shareData.link,
+                            imgUrl: shareData.imgUrl,
+                            success: shareData.success
+                        });
+                    });
+                });
+        };
+        document.head.appendChild(wxScript);
+        */
+    </script>
+</body>
+</html>
