@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f5;
+    --text: #2c241f;
+    --text-light: #8a7e76;
+    --accent: #c9a87c;
+    --accent-dark: #a68b5b;
+    --surface: #ffffff;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Noto Serif SC', 'Songti SC', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 2rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 80%;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    opacity: 0.3;
+  }
+
+  .hero-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+  }
+
+  .hero-names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeInUp 1s ease 0.3s forwards;
+  }
+
+  .hero-names span {
+    display: block;
+    font-style: italic;
+    font-size: 0.5em;
+    color: var(--accent);
+    margin: 0.5rem 0;
+    letter-spacing: 0.2em;
+  }
+
+  .hero-quote {
+    max-width: 500px;
+    margin-top: 3rem;
+    font-size: 0.95rem;
+    color: var(--text-light);
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeInUp 1s ease 0.6s forwards;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+
+  .scroll-hint span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--text-light);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: var(--accent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 8rem 2rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 6rem;
+  }
+
+  .section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+  }
+
+  .section-header .divider {
+    width: 60px;
+    height: 1px;
+    background: var(--accent);
+    margin: 1.5rem auto;
+  }
+
+  .section-header p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+  }
+
+  .timeline {
+    position: relative;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    gap: 2rem;
+    margin-bottom: 6rem;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .timeline-item:nth-child(even) .timeline-content {
+    grid-column: 3;
+    text-align: left;
+  }
+
+  .timeline-item:nth-child(even) .timeline-date-col {
+    grid-column: 1;
+    text-align: right;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-content {
+    grid-column: 1;
+    text-align: right;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-date-col {
+    grid-column: 3;
+    text-align: left;
+  }
+
+  .timeline-date-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .timeline-dot-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .timeline-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    position: relative;
+    z-index: 2;
+  }
+
+  .timeline-dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .timeline-line {
+    position: absolute;
+    top: 0;
+    bottom: -6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    opacity: 0.3;
+  }
+
+  .timeline-item:last-child .timeline-line {
+    display: none;
+  }
+
+  .date-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  .date-full {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    letter-spacing: 0.15em;
+    margin-top: 0.5rem;
+  }
+
+  .timeline-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+  }
+
+  .timeline-content p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 2;
+    max-width: 320px;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-content p {
+    margin-left: auto;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #f0ece6, #e8e2da);
+    border: 1px dashed var(--accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+
+  .photo-placeholder:hover {
+    background: linear-gradient(135deg, #ece6de, #e2d9ce);
+    border-style: solid;
+  }
+
+  .photo-placeholder svg {
+    width: 32px;
+    height: 32px;
+    stroke: var(--accent);
+    opacity: 0.6;
+  }
+
+  .timeline-item:nth-child(odd) .photo-placeholder {
+    margin-left: auto;
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 1.5rem;
+    max-width: 320px;
+  }
+
+  .timeline-item:nth-child(odd) .photo-grid {
+    margin-left: auto;
+  }
+
+  .photo-grid img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .photo-grid img:hover {
+    transform: scale(1.15);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    z-index: 2;
+    position: relative;
+  }
+
+  /* ===== GALLERY ===== */
+  .gallery-section {
+    background: var(--surface);
+    padding: 8rem 2rem;
+  }
+
+  .gallery-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+    min-height: 300px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gallery-item:nth-child(1) { grid-column: span 7; }
+  .gallery-item:nth-child(2) { grid-column: span 5; }
+  .gallery-item:nth-child(3) { grid-column: span 4; }
+  .gallery-item:nth-child(4) { grid-column: span 4; }
+  .gallery-item:nth-child(5) { grid-column: span 4; }
+
+  .gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #d4ccc4;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    transition: all 0.4s ease;
+  }
+
+  .gallery-placeholder:hover {
+    background: #f5f2ee;
+    border-style: solid;
+    border-color: var(--accent);
+  }
+
+  .gallery-placeholder svg {
+    width: 40px;
+    height: 40px;
+    stroke: var(--accent);
+    opacity: 0.5;
+    margin-bottom: 1rem;
+  }
+
+  /* ===== LETTER ===== */
+  .letter-section {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 10rem 2rem;
+    position: relative;
+  }
+
+  .letter-paper {
+    background: var(--surface);
+    padding: 4rem 3rem;
+    box-shadow: 0 20px 60px rgba(44, 36, 31, 0.06);
+    position: relative;
+  }
+
+  .letter-paper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--accent), var(--accent-dark));
+  }
+
+  .letter-header {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+
+  .letter-body {
+    font-size: 1.05rem;
+    line-height: 2.2;
+    color: var(--text);
+    font-weight: 300;
+  }
+
+  .letter-body p {
+    margin-bottom: 1.5rem;
+    text-indent: 2em;
+  }
+
+  .letter-signature {
+    margin-top: 3rem;
+    text-align: right;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--accent-dark);
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--text);
+    color: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(201,168,124,0.08) 0%, transparent 50%);
+  }
+
+  .days-counter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--accent);
+    position: relative;
+    z-index: 1;
+  }
+
+  .days-label {
+    font-size: 0.9rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 1rem;
+    color: rgba(250, 248, 245, 0.6);
+    position: relative;
+    z-index: 1;
+  }
+
+  .days-since {
+    font-size: 0.85rem;
+    color: rgba(250, 248, 245, 0.4);
+    margin-top: 2rem;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-quote {
+    margin-top: 4rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    font-weight: 300;
+    opacity: 0.7;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scaleY(0.5);
+      opacity: 0.5;
+    }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .timeline-item {
+      grid-template-columns: 1fr !important;
+      gap: 1rem;
+    }
+
+    .timeline-item .timeline-content,
+    .timeline-item .timeline-date-col {
+      grid-column: 1 !important;
+      text-align: center !important;
+    }
+
+    .timeline-content p,
+    .timeline-item:nth-child(odd) .timeline-content p {
+      margin: 0 auto;
+    }
+
+    .photo-placeholder,
+    .timeline-item:nth-child(odd) .photo-placeholder {
+      margin: 1.5rem auto 0;
+    }
+
+    .timeline-dot-col,
+    .timeline-line {
+      display: none;
+    }
+
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(2),
+    .gallery-item:nth-child(3),
+    .gallery-item:nth-child(4),
+    .gallery-item:nth-child(5) {
+      grid-column: span 12;
+    }
+
+    .letter-paper {
+      padding: 2.5rem 1.5rem;
+    }
+  }
+
+  /* ===== MUSIC PLAYER ===== */
+  .music-player {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .music-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1.5px solid var(--accent);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(44, 36, 31, 0.1);
+    transition: all 0.4s ease;
+  }
+
+  .music-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 24px rgba(44, 36, 31, 0.15);
+  }
+
+  .music-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--accent);
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .music-btn.playing svg {
+    animation: rotateDisc 3s linear infinite;
+  }
+
+  @keyframes rotateDisc {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .music-hint {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    letter-spacing: 0.1em;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.4s ease;
+    pointer-events: none;
+    white-space: nowrap;
+    background: var(--surface);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .music-player:hover .music-hint {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .music-error {
+    position: fixed;
+    bottom: 5rem;
+    right: 2rem;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    background: var(--surface);
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .music-error.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .music-panel {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    background: var(--surface);
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(44, 36, 31, 0.12);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    transform-origin: bottom right;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 101;
+  }
+
+  .music-panel.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  /* ===== FLOATING PARTICLES ===== */
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    opacity: 0;
+    animation: floatParticle 15s linear infinite;
+    z-index: 9999;
+  }
+
+  @keyframes floatParticle {
+    0% {
+      opacity: 0;
+      transform: translateY(100vh) rotate(0deg);
+    }
+    10% {
+      opacity: 0.3;
+    }
+    90% {
+      opacity: 0.3;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-10vh) rotate(360deg);
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">The Story of</div>
+  <div class="hero-names">
+    嘉仁&嘉敏
+    <span>and</span>
+    我们的时光
+  </div>
+  <p class="hero-quote">
+    "从2019年冬至那天起，世界开始变得不一样。<br>
+    有些相遇，是命中注定；有些陪伴，是岁月恩赐。"
+  </p>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="section-header">
+    <h2>Time Line</h2>
+    <div class="divider"></div>
+    <p>那些值得被记住的日子</p>
+  </div>
+
+  <div class="timeline">
+    <!-- Item 1 -->
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <h3>初相识</h3>
+        <p>
+          <br>
+          那是一场学校组织的包饺子活动，<br>
+          命运悄悄地把我们分到了同一组。<br>
+          那时的我们，只是彼此听说过名字的陌生人，<br>
+          客气地擀皮、填馅，完成了那一场冬至的仪式，<br>
+          却没说上几句话。<br>
+          <br>
+          谁也没想到，那个安静的午后，<br>
+          会是故事的第一页。<br>
+          后来我们被分配到了同一班级，<br>
+          交集慢慢多了，话也多了，<br>
+          两颗心才开始慢慢靠近。
+        </p>
+        <img src="照片/初相识.jpg" alt="初相识" style="width:100%; max-width:320px; margin-top:1.5rem; border-radius:4px; display:block; margin-left:auto;">
+      </div>
+      <div class="timeline-dot-col">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-date-col">
+        <div class="date-year">2019</div>
+        <div class="date-full">12月22日 · 冬至</div>
+      </div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="timeline-item">
+      <div class="timeline-date-col">
+        <div class="date-year">2020</div>
+        <div class="date-full">10月5日</div>
+      </div>
+      <div class="timeline-dot-col">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <h3>在一起</h3>
+        <p>
+          10月5号那天，你从老家回到深圳。<br>
+          我去北站接你，像是去接一个早已约定的未来。<br>
+          放下行李后，带你去吃小吃、喝奶茶，<br>
+          装得像普通朋友，其实心跳早就露了馅。<br>
+          <br>
+          电影开场，灯光暗下来，<br>
+          我悄悄握住了你的手。<br>
+          那一刻心里像有只小鹿在乱撞，<br>
+          怕你觉得太快，又怕你感觉不到我的心意。<br>
+          <br>
+          你没有抽开。<br>
+          <br>
+          散场后我们就那样牵着手，<br>
+          慢慢走到公交车站，<br>
+          路灯把两个人的影子拉得很长很长。<br>
+          送你回家的路上，拍下了我们的第一张合影。
+        </p>
+        <img src="照片/在一起.JPG" alt="在一起" style="width:100%; max-width:320px; margin-top:1.5rem; border-radius:4px; display:block;">
+      </div>
+    </div>
+
+    <!-- Item 3: 搬家 -->
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <h3>搬家</h3>
+        <p>
+          2020年10月底，我们从学校宿舍搬进了属于我们的第一个小家。
+          屋子不大，但你里里外外打扫得一尘不染，像是要把未来都擦亮。<br>
+          我负责拆包装，你负责归置，两个人配合得默契，好像已经一起生活了很久。<br>
+          <br>
+          忙到夜里一点多，你说饿了。我跑下楼，端回一碗汤米粉。
+          你说那是你吃过最好吃的一碗——要知道，你从前是不太爱吃这个的，总觉得寡淡。
+          可那天晚上，你连汤都喝得干干净净。<br>
+          <br>
+          吃饱洗漱，躺进还不熟悉的新房间。
+          明天开始，就要一起投简历、跑面试了。
+          生活还有很多不确定，但好在，我们是两个人一起面对的。<br>
+          <br>
+                  </p>
+        <img src="照片/搬家.jpg" alt="搬家" style="width:100%; max-width:320px; margin-top:1.5rem; border-radius:4px; display:block; margin-left:auto;">
+      </div>
+      <div class="timeline-dot-col">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-date-col">
+        <div class="date-year">2020</div>
+        <div class="date-full">10月底</div>
+      </div>
+    </div>
+
+    <!-- Item 4: 驾照与海 -->
+    <div class="timeline-item">
+      <div class="timeline-date-col">
+        <div class="date-year">2022</div>
+        <div class="date-full">5月</div>
+      </div>
+      <div class="timeline-dot-col">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <h3>驾照与海</h3>
+        <p>
+          2022年5月，我们用工作攒下的钱一起报了驾照。
+          报名、练车、考试，每一步都是并肩走的。
+          一起拿到驾照那天，像是同时解锁了人生新技能。
+          <br><br>
+          父母为我们庆祝，然后一起去了海边。
+          那是你第一次看海，也是我眼里最美的风景。
+          给你拍了很多照片，每一张都笑得很好看。
+        </p>
+        <div class="photo-grid">
+          <img src="照片/驾照1.png" alt="驾照1">
+          <img src="照片/驾照2.png" alt="驾照2">
+          <img src="照片/海边1.jpg" alt="海边1">
+          <img src="照片/海边2.jpg" alt="海边2">
+          <img src="照片/海边3.jpg" alt="海边3">
+          <img src="照片/海边4.jpg" alt="海边4">
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 5: 旅行 -->
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <h3>世界很大，我们慢慢走</h3>
+        <p>
+          在一起这些年，我们的脚印落在了很多地方。
+          从深圳出发，这座相识相知相爱的城市，几乎每个角落都有我们的回忆。然后一路向西，去了重庆吃九宫格火锅又香又辣，你一边流鼻涕一边往嘴里塞，吃完摇摇晃晃去看洪崖洞的灯，再一级一级爬完山城阶梯，腿软了但心很满。<br><br>
+          澳门这一天走了两万多步。大三巴、发财树、新葡京、伦敦人、威尼斯人、永利皇宫……像在世界之间穿梭，还吃了不少街边小吃。广州的早茶吃得很慢，吃饱了就漫无目的地逛，那天的阳光刚刚好。
+          你第一次坐飞机是去上海。在机舱里激动得像个孩子，落地后直奔三件套，又走到外滩，吹了黄浦江的风。杭州的西湖很美，但那天热得离谱，徒步到一半实在走不动，拦观光车却发现根本没座位，有钱没车坐，两个人站在路边哭笑不得。
+          宁波的叔叔婶婶特别热情，带着吃好吃的、去抓螃蟹，像回家一样。厦门是某一年的春节，没有回家，选择出逃。一年中的最后一个工作日，一下班就装车出发，放着共同喜欢的歌，吹着自由的风，开到海边去跨年。
+          清远的漂流刺激到尖叫，成都看了花花憨态可掬。后来还出了国门，在泰国感受异域风情，出海潜水，看各种各样的鱼儿从身边游过。<br><br>
+          从南到北，从国内到国外，世界很大，我们慢慢走。
+        </p>
+        <div class="photo-grid">
+          <img src="照片/旅行1.jpg" alt="旅行1">
+          <img src="照片/旅行2.jpg" alt="旅行2">
+          <img src="照片/旅行3.jpg" alt="旅行3">
+          <img src="照片/旅行4.jpg" alt="旅行4">
+          <img src="照片/旅行5.jpg" alt="旅行5">
+          <img src="照片/旅行6.jpg" alt="旅行6">
+          <img src="照片/旅行7.jpg" alt="旅行7">
+          <img src="照片/旅行8.jpg" alt="旅行8">
+          <img src="照片/旅行9.jpg" alt="旅行9">
+          <img src="照片/旅行10.jpg" alt="旅行10">
+          <img src="照片/旅行11.jpg" alt="旅行11">
+          <img src="照片/旅行12.jpg" alt="旅行12">
+        </div>
+      </div>
+      <div class="timeline-dot-col">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-date-col">
+        <div class="date-year">....</div>
+        <div class="date-full">这些年</div>
+      </div>
+    </div>
+
+    <!-- Item 6: 苦尽甘来 -->
+    <div class="timeline-item">
+      <div class="timeline-date-col">
+        <div class="date-year">2026</div>
+        <div class="date-full">5月 · 即将领证</div>
+      </div>
+      <div class="timeline-dot-col">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <h3>苦尽甘来</h3>
+        <p>
+          从在一起到现在，这条路走得不算容易。你爸妈曾经反对过，给过我们考验，甚至有过刁难。那些日子，我们吵过、累过，也差点想过放弃。但好在我们都撑过来了。
+          生活的酸甜苦辣一样都没少——没钱的时候分着吃一碗面，加班到深夜互相等对方回家，搬家时累得瘫在地上却还在笑。这些细碎的瞬间，反而把两个人绑得更紧。
+          现在，我们终于要走到这一步了。
+          这张红底照片里的两个人，笑得比任何时候都踏实。不是因为这一路有多顺利，而是因为知道，无论再难，身边这个人都没有松过手。
+        </p>
+        <img src="照片/红底证件照.jpg" alt="红底证件照" style="width:100%; max-width:320px; margin-top:1.5rem; border-radius:4px; display:block;">
+      </div>
+    </div>
+
+    <!-- Item 7: Placeholder for future -->
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <h3>待续...</h3>
+        <p>
+          还有更多故事等待被记录。<br>
+          婚礼、新生命、一起变老...<br>
+          <em style="color:var(--accent); font-size:0.85rem;">（点击添加更多时间节点）</em>
+        </p>
+        <div class="photo-placeholder" onclick="alert('复制上面的时间线代码块，粘贴修改即可添加新节点')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>添加节点</span>
+        </div>
+      </div>
+      <div class="timeline-dot-col">
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-date-col">
+        <div class="date-year">....</div>
+        <div class="date-full">未来的故事</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section">
+  <div class="section-header">
+    <h2>Moments</h2>
+    <div class="divider"></div>
+    <p>凝固在胶片里的光</p>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>照片 1</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>照片 2</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>照片 3</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>照片 4</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>照片 5</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LETTER -->
+<section class="letter-section">
+  <div class="letter-paper">
+    <div class="letter-header">A Letter to You</div>
+    <div class="letter-body">
+      <p>
+        写给你的这些话，其实酝酿了很久。每次想开口，总觉得语言太轻，承载不了这些年的重量。但今天，我想认认真真地说一次。
+      </p>
+      <p>
+        2020年10月5日，我们从朋友变成了恋人。那时候我没敢想，这个人会陪我走过往后那么多日子。在一起没多久，我们就搬进了属于我们的小家。那段日子很难，每天一起投简历、跑面试，深圳的夏天热得让人窒息，我去面试的时候，你就坐在公交车站等我，一等就是好久。你明明可以在家吹空调，却偏要陪着我去，不管多远，从来没有抱怨过一句。
+      </p>
+      <p>
+        后来我们都找到了工作。你在地产公司上班，我工作的地方离你不远。你每天下班比我早，却会坐着公交车来我公司楼下等我。有时候我要加班到深夜，你就陪着我加班，第二天还要早起去上班，你也从没说过累。我们一起回家吃饭，那一路的晚霞，是我一天中最期待的画面。
+      </p>
+      <p>
+        我辞职之后，去做了消杀的工作。周末你休息的时候，基本上都会陪着我一起去。我在客户家里干活，你就在车里等我。消杀一次要一个多小时，深圳的夏天车里像蒸笼一样，你热得满头大汗，也不舍得开空调，总说怕耗油。实在受不了了，才偷偷开一会儿，然后赶紧关掉。你总是笑着说：在家也是闲着，路上有个伴多好。可我知道，你是不想我一个人太孤单。
+      </p>
+      <p>
+        那段时间，我们经常不能按时吃饭。我给你买点爱吃的零食、奶茶、小蛋糕，你就开心得像个小女孩，那么容易满足。中午没有单的时候，我就去你公司找你吃午饭。不忙的时候，我也会去接你下班。你最喜欢下厨，却最不喜欢收拾洗碗，我们就搭配着干活——你做饭，我洗碗，这是我们的默契。
+      </p>
+      <p>
+        有时间的时候，我们就去周边的城市走走。那些短途的旅行，是我们忙碌生活里最甜的糖。后来，你爸妈知道了我们在一起的事，一直反对，说不能远嫁。可你觉得，选择对的人才是最重要的。你顶着压力带我回家，经历了你父母的反对、刁难、看不顺眼。那是一段很灰暗的日子，但你从来没有动摇过。你那么坚定地选择了我，我怎么舍得让你输。
+      </p>
+      <p>
+        第一次带你回我家的时候，你对我说，你非常喜欢我家的氛围。你不知道，我父母也喜欢你，一直对你很好，他们是真的把你当女儿疼。我们都爱你，很爱很爱你。
+      </p>
+      <p>
+        5月22号，我们就要去登记结婚了。从相识、相爱、同居、一起找工作、一起吃苦，到你父母反对、你坚定选择我，这一路走来不容易。但好在，我们谁都没有松手。现在这张红底照片就摆在我面前，照片里的两个人，笑得比任何时候都踏实。
+      </p>
+      <p>
+        谢谢你，陪我走过那些一无所有的日子。谢谢你，在最难的时候也没有放开我的手。以后的日子，换我来照顾你、保护你、宠着你。我保证，不会让你输。
+      </p>
+    </div>
+    <div class="letter-signature">
+      爱你的老公
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section class="footer">
+  <div class="days-counter" id="daysCount">0</div>
+  <div class="days-label">Days Since We Met</div>
+  <div class="days-since">相识于 2019年12月22日</div>
+  <div class="footer-quote">"故事还在继续..."</div>
+</section>
+
+<!-- MUSIC PLAYER -->
+<audio id="bgMusic" loop preload="metadata">
+  <source src="张杰-这就是爱.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-player">
+  <div class="music-hint">张杰 · 这就是爱</div>
+  <button class="music-btn" id="musicBtn" aria-label="播放音乐">
+    <svg viewBox="0 0 24 24" id="playIcon">
+      <polygon points="5 3 19 12 5 21 5 3"></polygon>
+    </svg>
+    <svg viewBox="0 0 24 24" id="pauseIcon" style="display:none">
+      <rect x="6" y="4" width="4" height="16"></rect>
+      <rect x="14" y="4" width="4" height="16"></rect>
+    </svg>
+  </button>
+</div>
+<div class="music-error" id="musicError">音乐加载失败，请检查文件是否存在</div>
+
+<script>
+  // Scroll reveal animation
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.timeline-item, .gallery-item').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Days counter animation
+  function animateValue(id, start, end, duration) {
+    const obj = document.getElementById(id);
+    const range = end - start;
+    const minTimer = 50;
+    let stepTime = Math.abs(Math.floor(duration / range));
+    stepTime = Math.max(stepTime, minTimer);
+    let startTime = new Date().getTime();
+    let endTime = startTime + duration;
+    let timer;
+
+    function run() {
+      let now = new Date().getTime();
+      let remaining = Math.max((endTime - now) / duration, 0);
+      let value = Math.round(end - (remaining * range));
+      obj.innerHTML = value.toLocaleString();
+      if (value == end) {
+        clearInterval(timer);
+      }
+    }
+
+    timer = setInterval(run, stepTime);
+    run();
+  }
+
+  // Calculate days since 2019-12-22
+  const meetDate = new Date('2019-12-22');
+  const today = new Date();
+  const diffTime = Math.abs(today - meetDate);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  // Animate when footer is visible
+  const footerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateValue('daysCount', 0, diffDays, 2000);
+        footerObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  footerObserver.observe(document.querySelector('.footer'));
+
+  // Floating particles
+  function createParticle() {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    const shapes = ['♥', '✦', '•'];
+    particle.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
+    particle.style.left = Math.random() * 100 + 'vw';
+    particle.style.fontSize = (Math.random() * 12 + 8) + 'px';
+    particle.style.color = 'var(--accent)';
+    particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+    particle.style.animationDelay = Math.random() * 5 + 's';
+    document.body.appendChild(particle);
+
+    setTimeout(() => {
+      particle.remove();
+    }, 20000);
+  }
+
+  // Create particles occasionally
+  setInterval(createParticle, 3000);
+  // Create initial batch
+  for (let i = 0; i < 5; i++) {
+    setTimeout(createParticle, i * 500);
+  }
+
+  // ===== MUSIC PLAYER =====
+  const music = document.getElementById('bgMusic');
+  const musicBtn = document.getElementById('musicBtn');
+  const playIcon = document.getElementById('playIcon');
+  const pauseIcon = document.getElementById('pauseIcon');
+  const musicError = document.getElementById('musicError');
+  let isPlaying = false;
+  let hasInteracted = false;
+
+  async function toggleMusic() {
+    if (isPlaying) {
+      music.pause();
+      musicBtn.classList.remove('playing');
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+      isPlaying = false;
+    } else {
+      try {
+        await music.play();
+        musicBtn.classList.add('playing');
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+        isPlaying = true;
+        musicError.classList.remove('show');
+      } catch (err) {
+        musicError.classList.add('show');
+        setTimeout(() => musicError.classList.remove('show'), 4000);
+      }
+    }
+  }
+
+  musicBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMusic();
+  });
+
+  music.addEventListener('ended', () => {
+    musicBtn.classList.remove('playing');
+    playIcon.style.display = 'block';
+    pauseIcon.style.display = 'none';
+    isPlaying = false;
+  });
+
+  // Auto-play on first user interaction
+  function handleFirstInteraction(e) {
+    if (!hasInteracted) {
+      hasInteracted = true;
+      if (e.target !== musicBtn && !musicBtn.contains(e.target)) {
+        toggleMusic();
+      }
+    }
+  }
+
+  document.addEventListener('click', handleFirstInteraction, { once: true });
+  document.addEventListener('touchstart', handleFirstInteraction, { once: true });
+
+  // 页面加载后尝试自动播放
+  window.addEventListener('load', async () => {
+    try {
+      await music.play();
+      musicBtn.classList.add('playing');
+      playIcon.style.display = 'none';
+      pauseIcon.style.display = 'block';
+      isPlaying = true;
+      hasInteracted = true;
+    } catch (err) {
+      // 浏览器阻止了自动播放，等待用户交互后播放
+    }
+  });
+</script>
+
+</body>
+</html>
